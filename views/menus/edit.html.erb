@@ -1,0 +1,14 @@
+<div class="row">
+  <div class="col-md-8">
+    <h1>Edit Menu</h1>
+    <span>Editing menu for <strong><%= @menu.start_at.strftime("%b %d, %Y @ %l:%M%P") %> - <%= @menu.end_at.strftime("%b %d, %Y @ %l:%M%P") %></strong></span>
+
+    <br/><br/>
+    <%= render 'recipes_list' %>
+  </div>
+  <div class="col-md-4">
+    <div id="menus-sidebar">
+      <%= render 'form' %>
+    </div>
+  </div>
+</div>

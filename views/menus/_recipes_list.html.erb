@@ -1,0 +1,13 @@
+<div class="row">
+  <% @recipes.each_with_index do |recipe, i| %>
+    <div class="col-md-6">
+      <div class="menu-recipe" data-recipe-id="<%=recipe.id%>" data-recipe-title="<%=recipe.title%>" data-recipe-image="<%= recipe.image.small%>">
+        <%= image_tag(recipe.image.medium) %><br/>
+        <h4><%= recipe.title %></h4>
+      </div>
+    </div>
+    <% if (i + 1) % 2 == 0 %>
+      <div class="clearfix"></div>
+    <% end %>
+  <% end %>
+</div>

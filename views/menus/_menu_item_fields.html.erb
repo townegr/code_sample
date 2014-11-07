@@ -1,0 +1,7 @@
+<div class="menu-items">
+  <div class="row">
+    <%= f.input :priority, collection: 1..Menu::MAX_RECIPES, label: false, include_blank: false, wrapper_html: { class: 'col-md-4' }, selected: (f.options[:child_index] + 1)  %>
+    <div class="col-md-8 menu-recipe-title"><%= f.object.recipe ? f.object.recipe.title : "<empty slot>" %></div>
+    <%= f.hidden_field :recipe_id, value: f.object.recipe ? f.object.recipe.id : nil  %>
+  </div>
+</div>

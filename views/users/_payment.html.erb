@@ -1,0 +1,125 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="payment-errors"></div>
+    <% if params[:error] == "y" %>
+      <div class="alert alert-danger" role="alert">
+        <p>There was an error updating your address. Please double check what you entered, then try again.</p>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <div class="active">
+      <%= simple_form_for @user, html: { class: "payment-form form-vertical" } do |f| %>
+        <%= f.hidden_field :country, value: 'US' %>
+
+        <div class="row">
+          <div class="col-sm-12">
+            <h5>Update Your Shipping Info</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+
+
+            <%= f.input :first_name, type: 'text', label: false, placeholder: 'First Name' %>
+            <label for="user_first_name">First Name</label>
+            <%= f.input :last_name, type: 'text', label: false, placeholder: 'Last Name' %>
+            <label for="user_last_name">Last Name</label>
+
+            <%= f.input :phone, type: 'text', label: false, placeholder: '212-555-1212' %>
+            <label for="user_phone">Phone Number</label>
+
+            <%= f.input :address, label: false, type: 'text' %>
+            <label for="user_address">Address</label>
+
+            <%= f.input :address2, label: false, type: 'text' %>
+            <label for="user_address2">Apartment / Suite / Floor</label>
+
+            <%= f.input :city, label: false, type: 'text' %>
+            <label for="user_city">City</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <%= f.input :state, as: :select, collection: us_states, label: false %>
+            <label for="user_state">State</label>
+          </div>
+          <div class="col-sm-6">
+            <%= f.input :zip, label: false, type: 'tel' %>
+            <label for="user_zip">Zip</label>
+          </div>
+        </div>
+        <input type="hidden" name="payment_form_type" value="user">
+        <input type="hidden" name="section" value="shipping">
+        <div class="row">
+          <div class="col-sm-12">
+            <h5>Update Your Billing Info</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="card-wrapper append-bottom"></div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-9">
+            <div class="form-group string required user_cc_number">
+              <input class="string required form-control" type="tel" size="255" name="cc-number" data-stripe="number">
+              <label for="cc-number">Credit Card Number</label>
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group string required user_cc_cvc">
+              <input class="string required form-control" size="4" name="cc-cvc" type="tel" data-stripe="cvc">
+              <label for="cc-cvc">cvc</label>
+            </div>
+          </div>
+        </div>
+        <div class="row append-bottom">
+          <div class="col-sm-6">
+            <div class="form-group string required user_cc_exp_month">
+              <input class="string required form-control" name="exp-month" type="text" placeholder="01" size="2" data-stripe="exp-month">
+              <label for="exp-month">Exp Month</label>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group string required user_cc_exp_year">
+              <input class="string required form-control" name="exp-year" type="text" placeholder="2018" size="4" data-stripe="exp-year">
+              <label for="exp-year">Exp Year</label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <%= f.button :submit, "Update", class: 'btn btn-orange btn-block' %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script>
+$(function() {
+  $('.payment-form').card({
+    container: $('.card-wrapper'),
+    numberInput: $('div.user_cc_number input'),
+    expiryInput: $('div.user_cc_exp_month input, div.user_cc_exp_year input'),
+    cvcInput: $('div.user_cc_cvc input'),
+    nameInput: $('#user_first_name, #user_last_name'),
+    formatting: true,
+    messages: {
+      validDate: 'valid\ndate', // optional - default 'valid\nthru'
+      monthYear: 'mm/yyyy', // optional - default 'month/year'
+    },
+    values: {
+      number: '•••• •••• •••• ••••',
+      name: 'Full Name',
+      expiry: '••/••',
+      cvc: '•••'
+    }
+  });
+});
+</script>

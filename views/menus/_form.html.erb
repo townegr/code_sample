@@ -1,0 +1,16 @@
+<%= simple_form_for [:admin, @menu], html: { class: "form-vertical" } do |f| %>
+  <% if @menu.new_record? %>
+    <%= f.hidden_field :start_at, value: @start_at %>
+    <%= f.hidden_field :end_at, value: @end_at %>
+  <% end %>
+  <%#= f.input :status, as: :select, collection: Menu::STATUSES, include_blank: false %>
+
+  <div id="recipe-priority">
+    <h3>Selected Recipes</h3>
+    <%= f.simple_fields_for :menu_items do |menu_item| %>
+      <%= render 'menu_item_fields', f: menu_item %>
+    <% end %>
+  </div>
+
+  <%= f.button :submit, class: 'btn btn-primary' %>
+<% end %>

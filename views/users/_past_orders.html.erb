@@ -1,0 +1,34 @@
+<div class="row archive">
+  <div class="col-sm-6 col-sm-offset-3">
+    <div class="row">
+      <div class="col-xs-12">
+        <h4 class="text-center">Order History</h4>
+      </div>
+    </div>
+
+    <% @orders.each do |order| %>
+
+    <div class="row">
+      <div class="panel">
+        <div class="col-xs-4">
+          <span class="date">Aug 13 2014</span>
+        </div>
+        <div class="col-xs-4">
+          <div class="thumbnail">
+            <%= link_to(image_tag(order.recipes.first.image.xsmall, class: 'img-responsive'),recipe_path(order.recipes.first)) %>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <%= link_to(image_tag(order.recipes.last.image.xsmall, class: 'img-responsive'),recipe_path(order.recipes.last)) %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function() {
+    $(".archive .date").lettering('words');
+  });
+</script>

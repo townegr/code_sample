@@ -1,0 +1,46 @@
+<div class="page-header">
+  <h1 class="fancy"><span>Dashboard</span></h1>
+</div>
+<div class="inner-wrap">
+  <div class="tabs">
+    <div class="row">
+      <div class="col-sm-12">
+        <ul class="nav nav-tabs text-center" role="tablist">
+          <li class="overview"><a href="#overview">Overview</a></li>
+          <li class="shipping"><a href="#shipping">Shipping &amp; Billing</a></li>
+          <li class="password"><a href="#password">Password</a></li>
+          <li class="orders"><a href="#orders">Past Orders</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="well well-lg">
+          <div class="tab-content dashboard">
+            <div id="overview" class="tab">
+              <%= render 'overview' %>
+            </div>
+            <div id="shipping" class="tab">
+              <%= render 'payment' %>
+            </div>
+            <div id="password" class="tab">
+              <%= render 'password' %>
+            </div>
+            <div id="orders" class="tab">
+              <%= render 'past_orders' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% if params[:confirmed].present? && params[:confirmed] == "true" %>
+  <script>
+    $(function() {
+      $("#modal-container").html("<%= j render '/common/modal_order_confirmed' %>");
+      $("#myModal").modal();
+    });
+  </script>
+<% end %>

@@ -1,0 +1,53 @@
+<div class="row">
+  <div class="col-sm-6 col-sm-offset-3">
+    <%= simple_form_for @user, html: { class: "form-vertical" } do |f| %>
+      <% if @user.errors.any? %>
+        <ul>
+        <% @user.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      <% end %>
+      <div class="row">
+        <div class="col-sm-12">
+          <h5>Edit your personal info</h5>
+        </div>
+      </div>
+      <div class="row append-bottom">
+        <div class="col-sm-12">
+          <input type="hidden" name="section" value="<%=@section%>">
+        </div>
+      </div>
+      <div class="user-avatar">
+        <div class="row">
+          <div class="col-sm-12">
+            <h5 class="text-left">Update Your Photo</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6">
+            <input type="hidden" name="section" value="<%=@section%>">
+            <%= f.input :image, label: false %>
+
+            <label for="user_image"><span>Upload</span>From Computer</label>
+          </div>
+          <div class="col-sm-6 text-right">
+            <% if @user.image? %>
+              <%= image_tag(@user.image.small, class: 'img-circle') %>
+              <div class="checkbox">
+                <label>
+                  <%= f.check_box :remove_image, name: 'remove_image' %>Remove Image
+                </label>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12">
+          <%= f.button :submit, "Update", class: 'btn btn-orange btn-block' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

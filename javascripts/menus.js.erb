@@ -1,0 +1,42 @@
+$(document).on('click', '.menu-recipe', function(event) {
+  for ( var i = 0; i < '<%= Menu::MAX_RECIPES %>'; i++ ) {
+    var menuPrioritySlot = $('#menu_menu_items_attributes_' + i + '_recipe_id');
+    var menuRecipeID = $(this).data('recipe-id');
+    var recipeTitle = $(this).data('recipe-title');
+    var icon = $('<a href="#" class="fa fa-times"></a>');
+
+    if (!menuPrioritySlot.val()) {
+      $(menuPrioritySlot).val(menuRecipeID);
+      $(menuPrioritySlot).siblings('.menu-recipe-title').html(recipeTitle).append(icon);
+      break;
+    }
+  }
+});
+
+$(function(){
+  for ( var i = 0; i < '<%= Menu::MAX_RECIPES %>'; i++ ) {
+    var menuPrioritySlot = $('#menu_menu_items_attributes_' + i + '_recipe_id');
+    var inputForms = $('.menu-recipe-title').parent().find('input');
+    var icon = $('<a href="#" class="fa fa-times"></a>');
+
+    inputForms.each(function() {
+      if ($(this).val() > 0) {
+        $(menuPrioritySlot).siblings('.menu-recipe-title').append(icon);
+      }
+    });
+  }
+});
+
+$(document).on('click', 'a.fa-times', function(event) {
+  $(this).parent().parent().find('input').removeAttr("value");
+  $(this).parent().text("<empty slot>");
+});
+
+$(function(){
+  $menusSidebar = $("#menus-sidebar");
+  if ($menusSidebar.length) {
+    $(window).scroll(function(){
+     $menusSidebar.stop().animate({"marginTop": ($(window).scrollTop()) + "px"}, "medium" );
+    });
+  }
+});

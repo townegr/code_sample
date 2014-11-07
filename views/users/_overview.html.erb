@@ -1,0 +1,55 @@
+<div class="row overview">
+  <div class="col-sm-7">
+    <% if current_user.is_blocked_from_ordering? %>
+      <h4 class="text-center">Waiting Is The Hardest Part</h4>
+      <p>We're sorry to tell you but we are not shipping meals into your area just yet. Rest assured, we are hard at work to expand our coverage around the country - and as soon as we're ready to get The Purple Carrot to you, we'll let you know. Thanks for your understanding.</p>
+    <% else %>
+      <h4 class="text-center">Your Order for the Week &raquo;</h4>
+      <div class="orders dashboard-cell">
+        <% if @current_order.present? %>
+          <%= render('/orders/current_order', order: @current_order) %>
+        <% else %>
+          <div class="bs-callout bs-callout-warning">
+            <h4>Aren't you hungry?</h4>
+            <p>Check out <%= link_to "this week's recipes", recipes_path %> to start your order!</p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-sm-4 col-sm-offset-1">
+    <div class="row shipping-to">
+      <div class="col-sm-12">
+        <h4>Shipping to:</h4>
+        <% if @user.shipping_address_complete? %>
+        <address>
+          <strong><%= @user.full_name %></strong><br>
+          <%= @user.address %><br>
+          <% if @user.address2.present? %>
+            <%= @user.address2 %><br/>
+          <% end %>
+          <%= @user.city %>, <%= @user.state %> <%= @user.zip %>
+        </address>
+        <%= link_to 'Update Shipping Info?', edit_user_path, class: 'payment' %>
+        <% else %>
+        <div class="bs-callout bs-callout-warning">
+          <p>Please provide your <%= link_to 'shipping address', edit_user_path, class: 'payment' %>, so that we can send you your meals.</p>
+        </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row billing-to">
+      <div class="col-sm-12">
+        <h4>Billing to:</h4>
+        <% if @user.stripe_customer_id.blank? %>
+        <div class="bs-callout bs-callout-warning">
+          <p>Please provide your <%= link_to 'billing information', edit_user_path, class: 'payment' %>.</p>
+        </div>
+        <% else %>
+          <p>When you place an order, we will bill your <strong><%= @user.stripe_cc_type %></strong> ending in <strong><%= @user.stripe_cc_last_four %></strong>, expiring on <strong><%= @user.stripe_cc_exp_month %>/<%= @user.stripe_cc_exp_year %></strong>.</p>
+          <%= link_to 'Update Billing Info?', edit_user_path, class: 'payment' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
